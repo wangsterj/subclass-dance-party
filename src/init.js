@@ -36,4 +36,41 @@ $(document).ready(function() {
       window.dancers[i].lineUp();
     }
   });
+
+  $('.slow-down-button').on('click', function() {
+    for (let i = 0; i < window.dancers.length; i++) {
+      window.dancers[i].timeBetweenSteps = window.dancers[i].timeBetweenSteps*2;
+    }
+  })
+
+  $('.speed-up-button').on('click', function() {
+    for (let i = 0; i < window.dancers.length; i++) {
+      window.dancers[i].timeBetweenSteps = window.dancers[i].timeBetweenSteps/2;
+    }
+  });
+
+  $('.dance-floor').on('mouseenter', '.RotatingDancer', function(event) {
+    $(console.log(this.$node));
+  });
+
+  $('.dance-floor').on('mouseenter', '.jumpyDancer', function(event) {
+    // console.log($(this))
+    console.log(window.dancers[0]);
+    console.log($(this));
+    $(this).css("border", '10px solid red');
+    $(this).css("transform", 'scale(5)');
+    $(window.dancers[0]).attr("timeBetweenSteps", '1000');
+    // $(this[0]).attr("timeBetweenSteps", '1000');
+    $.proxy(this.console, this)
+    // console();
+    // alert($(this).attr("timeBetweenSteps"));
+
+    // if (this.styleSettings !== undefined) {
+    //   this.styleSettings = {
+    //     transform: 'scale(2)'
+    //     // left: left
+    //   };
+    //   this.$node.css(this.styleSettings);
+    // }
+  });
 });
