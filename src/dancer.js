@@ -30,3 +30,7 @@ Dancer.prototype.setPosition = function(top, left) {
   };
   this.$node.css(this.styleSettings);
 };
+
+Dancer.prototype.lineUp = function() {
+  this.setPosition(this.styleSettings.top, 10);
+};
