@@ -16,8 +16,6 @@ Dancer.prototype.step = function() {
   // it just schedules the next step
 
   var time = this.timeBetweenSteps;
-
-  // ALT TWO - causes 2 runs (dependant on line 6 "step()");
   setTimeout(this.step.bind(this), time);
 };
 
