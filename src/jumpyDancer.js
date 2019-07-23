@@ -1,8 +1,7 @@
-var JumpyDancer = function(top, left, timeBetweenSteps) {
+var JumpyDancer = function(top, left, timeBetweenSteps, id) {
   Dancer.call(this, top, left, timeBetweenSteps);
-  this.$node = $('<div class="jumpyDancer"></div>');
+  this.$node = $(`<div id="${id}"class="jumpyDancer"></div>`);
   this.setPosition(top, left);
-  this.flag = true;
 };
 
 JumpyDancer.prototype = Object.create(Dancer.prototype);
