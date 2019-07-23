@@ -1,3 +1,14 @@
+var danceCountMaker = function() {
+  var count = 0;
+  return function() {
+    var result = count;
+    count++;
+    return result;
+  }
+};
+
+var incrementDancer = danceCountMaker();
+
 $(document).ready(function() {
   window.dancers = [];
 
@@ -22,12 +33,21 @@ $(document).ready(function() {
 
     // make a dancer with a random position
 
-    var dancer = new dancerMakerFunction(
-      ($('.dance-floor').height()+40) * Math.random(),
-      $('.dance-floor').width() * Math.random(),
-      Math.random() * 1000
-    );
+    var id = incrementDancer();
+    var height = ($('.dance-floor').height() + 40) * Math.random();
+    var width = $('.dance-floor').width() * Math.random();
+    var time = Math.random() * 1000;
+    var dancer = new dancerMakerFunction(height, width, time, id);
     $('.dance-floor').append(dancer.$node);
+
+    for (let i = 0; i < window.dancers.length; i++) {
+      let danceTempStyles = window.dancers[i].styleSettings;
+      let dist = Math.sqrt((danceTempStyles.top-height)**2+(danceTempStyles.left-width)**2);
+      if (dist < 100) {
+        window.dancers[i].nearNeighbor = true;
+        dancer.nearNeighbor = true;
+      }
+    }
     window.dancers.push(dancer);
   });
 
@@ -49,28 +69,10 @@ $(document).ready(function() {
     }
   });
 
-  $('.dance-floor').on('mouseenter', '.RotatingDancer', function(event) {
-    $(console.log(this.$node));
-  });
-
   $('.dance-floor').on('mouseenter', '.jumpyDancer', function(event) {
-    // console.log($(this))
-    console.log(window.dancers[0]);
-    console.log($(this));
+    var thisDancer = window.dancers[$(this)[0].id];
     $(this).css("border", '10px solid red');
     $(this).css("transform", 'scale(5)');
-    $(window.dancers[0]).attr("timeBetweenSteps", '1000');
-    // $(this[0]).attr("timeBetweenSteps", '1000');
-    $.proxy(this.console, this)
-    // console();
-    // alert($(this).attr("timeBetweenSteps"));
-
-    // if (this.styleSettings !== undefined) {
-    //   this.styleSettings = {
-    //     transform: 'scale(2)'
-    //     // left: left
-    //   };
-    //   this.$node.css(this.styleSettings);
-    // }
+    $(thisDancer).attr("timeBetweenSteps", '50');
   });
 });
