@@ -13,6 +13,24 @@ body, a:link, a:visited, a:active{
   padding:5px 12px;
   float:right;
 }
+
+.line-up-button {
+  padding:5px 12px;
+  float: left;
+}
+
+.dance-floor {
+  height: 100%;
+}
+
+.generic-box {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  background-color: blue;
+  border: 2px black solid;
+}
+
 .topbar{
   height:32px;
   background-color: #555;
@@ -32,7 +50,7 @@ body, a:link, a:visited, a:active{
 }
 /*  position:absolute;
 */
-.RotatingDance {
+.RotatingDancer {
   width: 100px;
   height: 100px;
   background-color: red;
@@ -61,5 +79,4 @@ body, a:link, a:visited, a:active{
   50%  {background-color:blue; left:200px; top:200px;}
   75%  {background-color:green; left:0px; top:200px;}
   100% {background-color:red; left:0px; top:0px;}
-}
 }
