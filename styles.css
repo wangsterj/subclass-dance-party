@@ -31,6 +31,13 @@ body, a:link, a:visited, a:active{
   height: 100%;
 }
 
+.water {
+  position: fixed;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
 .generic-box {
   width: 100px;
   height: 100px;
