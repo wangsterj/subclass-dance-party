@@ -9,10 +9,38 @@ var danceCountMaker = function() {
 
 var incrementDancer = danceCountMaker();
 
+// make a dancer with a random position
+var makeDancer = function(dancerMakerFunctionName) {
+
+  // get the maker function for the kind of dancer we're supposed to make
+  var dancerMakerFunction = window[dancerMakerFunctionName];
+
+  // make a dancer with a random position
+
+  var id = incrementDancer();
+  var height = ($('.dance-floor').height() + 40) * Math.random();
+  var width = $('.dance-floor').width() * Math.random();
+  var time = Math.random() * 1000;
+  var dancer = new dancerMakerFunction(height, width, time, id);
+  $('.dance-floor').append(dancer.$node);
+
+  for (let i = 0; i < window.dancers.length; i++) {
+    let danceTempStyles = window.dancers[i].styleSettings;
+    let dist = Math.sqrt((danceTempStyles.top-height)**2+(danceTempStyles.left-width)**2);
+    if (dist < 200) {
+      window.dancers[i].nearNeighbor = true;
+      dancer.nearNeighbor = true;
+    }
+  }
+  window.dancers.push(dancer);
+}
+
 $(document).ready(function() {
   window.dancers = [];
 
   $('.addDancerButton').on('click', function(event) {
+    var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
+    makeDancer(dancerMakerFunctionName);
     /* This function sets up the click handlers for the create-dancer
      * buttons on dancefloor.html. You should only need to make one small change to it.
      * As long as the "data-dancer-maker-function-name" attribute of a
@@ -26,29 +54,16 @@ $(document).ready(function() {
      * A new object of the given type will be created and added
      * to the stage.
      */
+
+  });
+  
+  $('.snowy-dancer').on('click', function() {
     var dancerMakerFunctionName = $(this).data('dancer-maker-function-name');
-
-    // get the maker function for the kind of dancer we're supposed to make
-    var dancerMakerFunction = window[dancerMakerFunctionName];
-
-    // make a dancer with a random position
-
-    var id = incrementDancer();
-    var height = ($('.dance-floor').height() + 40) * Math.random();
-    var width = $('.dance-floor').width() * Math.random();
-    var time = Math.random() * 1000;
-    var dancer = new dancerMakerFunction(height, width, time, id);
-    $('.dance-floor').append(dancer.$node);
-
-    for (let i = 0; i < window.dancers.length; i++) {
-      let danceTempStyles = window.dancers[i].styleSettings;
-      let dist = Math.sqrt((danceTempStyles.top-height)**2+(danceTempStyles.left-width)**2);
-      if (dist < 100) {
-        window.dancers[i].nearNeighbor = true;
-        dancer.nearNeighbor = true;
-      }
+    var a=50;
+    while (a >0) { 
+      makeDancer(dancerMakerFunctionName);
+      a--;
     }
-    window.dancers.push(dancer);
   });
 
   $('.line-up-button').on('click', function(event) {
@@ -71,8 +86,9 @@ $(document).ready(function() {
 
   $('.dance-floor').on('mouseenter', '.jumpyDancer', function(event) {
     var thisDancer = window.dancers[$(this)[0].id];
-    $(this).css("border", '10px solid red');
-    $(this).css("transform", 'scale(5)');
+    $(this).css("border", '5px solid red');
+    $(this).css("transform", 'scale(1)');
     $(thisDancer).attr("timeBetweenSteps", '50');
+    $(this).append("<img src = 'images/excited.jpg'>");
   });
 });
